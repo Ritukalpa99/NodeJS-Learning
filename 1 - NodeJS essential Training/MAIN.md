@@ -130,3 +130,65 @@ Example of breaking into modules
 Modules present a great way to separate and reuse code. And the `EventEmitter` presents a way to handle custom events when they are raised. By using both of these tools together with `Readline`, it's pretty cool Nodejs module.
 
 # File Management and Streams
+## Listing directory files
+Node ships with a module that allows us to interact with the file system. The `fs` module can be used to list files and directories, create files and directories, stream files, change file permissions, and just about anything we'd need to work with files and directories.
+
+```js
+const fs = require('fs');
+
+let files = fs.readdirSync('./');
+console.log(files);
+```
+The above code outputs an array of all of the files that are listed in the mentioned directory. \
+The function used is called `read dir Sync`. This means that read the contents of the directory synchronously with a blocking request. Meaning, we're blockingthe rest of the process.
+
+## Reading files
+Synchronous Way
+```js
+const fs = require('fs');
+
+let ipsumSync = fs.readFileSync('./readme.md', "utf-8");
+
+console.log(ipsumSync);
+```
+Asynchronous Way
+```js
+const fs = require('fs');
+
+fs.readFile('./readme.md', "utf-8", (err, ipsumAsync) => {
+    console.log(ipsumAsync);
+})
+```
+W're reading it asynchronously, when the system has finished retrieving the file's contents. The callback is invoked, allowing our main thread to do something else in the meantime.
+
+## Writing and Appending file
+`fs.writeFile('./fileName.txt','write this', (err) => {})` \
+`fs.appendFileSync('./fileName.txt', 'appended data')` \
+Both these have sync and async versions.
+
+## Creating directories
+`fs.mkdir()` \
+`fs.mkdirSync()` \
+`fs.existsSync()`  -> Checks for existence of a directory 
+## Renaming and Removing Files
+`fs.rename()` \
+`fs.unlink()` - Remove files
+
+## Renaming and Removing Directories
+`fs.rename() or fs.renameSync()` - can be used for renaming as well as moving the directory \
+`fs.rmdir()` -> only async way to be used. Is the directory is not empty, it'll throw an error.
+
+## Writable File Streams
+Streams in Nodejs give us a way to asynchronously handle continuous data flows. \
+`process.stdout` is but a writable stream, where we send data chunks to it using the right methods \
+`process.stdin` is a readable stream. Whenever a data event is raised, we're going to use a callback function and pass data back into the callback. \
+Both of these already implement the `stream interface`. \
+The problem with normal file reading is that if we're reading a huge file, it's going to create some latency. It a better idea to use a readable stream. Instead of reading an entire file at once, a stream breaks the file down into bits or chunks. \
+Readable stream raise data events and pass small chunks of data to the callback. We don't have to wait for the entire file before the first chunk will log. \
+[Readable stream code](./3%20-%20File%20Management%20and%20Streams/7_readable_file_streams.js) \
+Using streams means that we don't have to wait for the entire file to finish loading before we start reading the data. Streaming video is a perfect example of this. \
+When we watch a movie online, we can start watching it before the entire movie is fully donwloaded. That's because we're breaking down our video into chunks that are streamed. So we watch the first part of a movie while the rest of the movie is still being delivered.
+
+## Writable File Streams
+Writable Stream is used to write the data chunks that are being read by the readable stream.
+[Writable stream](./3%20-%20File%20Management%20and%20Streams/8_writable_file_streams.js)

@@ -18,3 +18,14 @@ The client sends a request to Node server, which then relays that request to Exp
 ## Express Application Generator
 Express Application Generator is a package that allows to quickly and easily get a skeleton project with Express up and running. \
 It provides several options for the project, including template enginge, adding `gitignore` file.
+1. `npm install express-generator`
+2. Let's create a project.
+    - Name is `testapp`
+    - add a `gitignore` file
+    - use `handlebar` template enginge
+    - `express --git --hbs testapp`
+3. cd to directory `testapp`
+4. install dependecy by `npm install`
+5. run it by `$env:DEBUG='testapp:*';npm start`
+6. The command in step 5 may be different. Check docs.
+

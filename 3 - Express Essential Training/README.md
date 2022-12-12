@@ -29,3 +29,45 @@ It provides several options for the project, including template enginge, adding 
 5. run it by `$env:DEBUG='testapp:*';npm start`
 6. The command in step 5 may be different. Check docs.
 
+# Express Basics
+
+## Getting started
+`ES6` or `ECMAScript 6` is a version of JS which is considered industry standard. \
+`babel` is a JS compiler. It translate `ES6` syntax to code to older syntax of JS. \
+Some `babel` dev dependencies needed `@babel/core`, `@babel/cli`, `@babel/preset-env` and `@babel/node` \
+Need to create a `.babelrc` file have add ``` {"presets": ["@babel/preset-env"]}``` \
+`ES6` use module exports (import/exports) and not common JS (require), to enable it, inside `package.json`, add `"type":"module"` \
+Scripts are added to make running the code easily, inside `scripts` section of `package.json` file, add `"start" : "nodemon --experimental-json-modules --exec babel-node filename"` \
+ - `nodemon` references the nodemon package installed.
+ - `--experimental-json-modules` is used to load JSON files.
+ - Rest is telling the server to run the project using `babel` and start the application from the `filename`.
+ 
+## Adding data to server
+`Mockaroo` is a good site to get data sets for use. \
+While using data as a `.json` file, we need to import it as `import data from "./some_data.json" assert { type: "json" };`, without the `assert {type:"json"};` it'd throw an error.
+
+## HTTP methods and routes
+Routes determine how an application responds to a client request to a particular endpoint, which is a path and an `HTTP` request method. \
+Whenever you visit of `url`, it is a route that has been coded to serve up specific information based on the page and associated `http` methods. 
+
+`HTTP` methods are actions that are taken on a specific resouce,often corresponding to create, read, update, and delete `(CRUD)` operations. \
+`GET` retrieves data from the server. \
+`POST` sends data to the server and creates a new resource. \
+`PUT` Updates an exisiting resource. \
+`DELETE` Deletes an exisiting resource. 
+
+`HTTP Messages` : There are 2 messages : \
+`Request` : Sent by the client to trigger an action on the server. \
+`Response` : Answers from the server. \
+Each `http` method take 2 arguments,`path` and `handler`, `handler` is the function that is going to execute once the `path` is found. `app.get('/path',(req,res) => { console.log(req) })` \ 
+
+## postman
+Testing the `get` method is easy. Open the browser, go to the route, and the data sent to that route is available. \
+Testing other `http` mehods is not the simple. But there is a free tool called `postman` to do the same.
+
+## serve static files
+In addition to using `Express` to query and fetch data from APIs, it can also serve static files. Static files, are files that are not going to change. Typically, they are photos, PDFs, documents files, but also include development specific files like `html` and `css`. \
+
+In order to serve static files, use the built-in middleware function `express.static()` that will be passed to `app.use()`. \
+`app.use()` is built in with `express` and used to handle `middleware` functions. 
+`express.static()` has a few parameters, one of them is the foldername, where static files reside. This file will be served from the root directory, and will reference the file based on its name.

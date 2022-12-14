@@ -37,7 +37,7 @@ It provides several options for the project, including template enginge, adding 
 Some `babel` dev dependencies needed `@babel/core`, `@babel/cli`, `@babel/preset-env` and `@babel/node` \
 Need to create a `.babelrc` file have add ``` {"presets": ["@babel/preset-env"]}``` \
 `ES6` use module exports (import/exports) and not common JS (require), to enable it, inside `package.json`, add `"type":"module"` \
-Scripts are added to make running the code easily, inside `scripts` section of `package.json` file, add `"start" : "nodemon --experimental-json-modules --exec babel-node filename"` \
+Scripts are added to make running the code easily, inside `scripts` section of `package.json` file, add `"start" : "nodemon --experimental-json-modules --exec babel-node filename"` 
  - `nodemon` references the nodemon package installed.
  - `--experimental-json-modules` is used to load JSON files.
  - Rest is telling the server to run the project using `babel` and start the application from the `filename`.
@@ -66,8 +66,75 @@ Testing the `get` method is easy. Open the browser, go to the route, and the dat
 Testing other `http` mehods is not the simple. But there is a free tool called `postman` to do the same.
 
 ## serve static files
-In addition to using `Express` to query and fetch data from APIs, it can also serve static files. Static files, are files that are not going to change. Typically, they are photos, PDFs, documents files, but also include development specific files like `html` and `css`. \
+In addition to using `Express` to query and fetch data from APIs, it can also serve static files. Static files, are files that are not going to change. Typically, they are photos, PDFs, documents files, but also include development specific files like `html` and `css`. 
 
 In order to serve static files, use the built-in middleware function `express.static()` that will be passed to `app.use()`. \
 `app.use()` is built in with `express` and used to handle `middleware` functions. 
 `express.static()` has a few parameters, one of them is the foldername, where static files reside. This file will be served from the root directory, and will reference the file based on its name.
+
+# Express Routing Fundamentals
+
+In order to construct routes in express, we need 2 key components, the path and the method. 
+```js
+app.get('/animals', (request,response) => {
+    response.json(data);
+});
+```
+The path is what defines the end points, in this example `/animals`. \
+Method is what defines the action that we're going to take with our end point. In this example, we have `get` method which will retrieve data and provide it to the client. 
+
+## Route Parameters
+`Routing parameters` are segments of a `URL` that are used to capture values specified at positions within the `URL`. \
+All route paramaters will be transmitted as `strings`.
+
+## Route handlers
+Route handlers are blocks of code that handle logic for rotues. This can be in the form of a function, an array of function, or combination of both. 
+
+There are methods that can be incorporated to have multiple callbacks. In order to add additional callbacks, we use the `next()` function. \
+`next` is not specific to `node.js` or `express`, it's a 3rd argument that can be passed along the request and response, and it invokes the next `middleware` function in the app.
+
+## Common Response Methods
+When creating routes with `express`, various methods are used to handle the response and provide feedback to the client.
+
+`Response Methods` are methods on the `response` object that are responsible for transmitting information to the client. 
+- `.json()` - Sends a `JSON` response.
+- `.send()` - Sends the `HTTP` response.
+- `.download()` - Transfers the file as an attachment.
+- `.redirect()` - Redirects the user to the specified path.
+
+## Route Chaining
+When creating `routes` with `express`, we have have several routes with the same path, but using different methods.
+```js
+app.get("/class", (req, res) => {
+  res.send("Retrieve class info");
+});
+
+app.post("/class", (req, res) => {
+  res.send("Create class info");
+});
+
+app.put("/class", (req, res) => {
+  res.send("Update class info");
+});
+
+app.delete("/class", (req, res) => {
+  res.send("Delete class info");
+});
+```
+Using `route()` method of `app`, we can chain several methods together to keep code clean and easy to understand. 
+```js
+app
+  .route("class")
+  .get((req, res) => {
+    res.send("Retrieve class info");
+  })
+  .post((req, res) => {
+    res.send("Create class info");
+  })
+  .put((req, res) => {
+    res.send("Update class info");
+  })
+  .delete((req, res) => {
+    res.send("Delete class info");
+  });
+```

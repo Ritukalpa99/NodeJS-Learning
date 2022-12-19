@@ -138,3 +138,32 @@ app
     res.send("Delete class info");
   });
 ```
+
+# Express Essentails : Middleware
+
+## What is middleware
+`middleware functions` are functions that have access to the request object, the responce object and the `next` function in the apps request-response cycle. \
+`middleware` performs a number of tasks, executing code, changing the request object, ending the request response cycle, or calling `next`.
+<img src="./img/middleware.png">
+
+## Built-in middleware with express
+There are 3 built-in middleware functions with `express`, `Static`, `JSON` and `URL-encoded`.
+- `express.static` - Serves static assets, including files and images.
+- `express.json` - Parses incoming requests with `JSON` payloads. It is based on `body-parser`, which is a Node.js parsing middleware.
+- `express.urlencoded` - Parses incoming requests with URL-encoded payloads
+
+| JSON                                                       | urlencoded                        |
+|------------------------------------------------------------|-----------------------------------|
+| { "name" : "Jinn Mori",   "title" : "coder",   "age" : 22} | name=Jinn+Mori&title=coder&age=22 |   
+
+In `json` we have `keys` and `values` within an object. While in the `url-encoded` version is assembled in a single block with `keys` and `values` separated by an `=` sign. \
+`app.use(express.urlencoded()` takes an arguments. Pass the object `{extended : true}`, to give a more `JSON-like` experience. Also prevents errors.
+
+## Handling errors
+When creating endpoints, it is important to take into account handling errors that might arise. \
+The error handling function should be at the end of the routing file. Preferably just before the `app.listen`. \
+```js
+app.use((error,req,res,next) => {
+  // custom error handling
+})
+```

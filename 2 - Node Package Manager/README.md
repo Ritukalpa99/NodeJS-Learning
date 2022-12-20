@@ -64,7 +64,7 @@ To fix errors, `npm audit fix` or simply install the dependencies one by one.
 ## Scripting
 Scripting in a `package.json` file provides a way to do simple command, to repeat, or execute complex commands. \
 There are some predefined commands. eg `start`, we can be used by `npm start` and `npm` will run the instruction attached with `start` inside `scripts` section of `package.json`. \
-We can also defined our own scripts. To run them use `npm run script-name`. \
+We can also defined our own scripts. To run them use `npm run script-name`. 
 
 ## npx
 At times there are packages that are used only once in projects. The only thing they do afterwards if package pollution in the global directories. The main prupose of creating `npx` was to resolve this issue. \
@@ -73,3 +73,21 @@ At times there are packages that are used only once in projects. The only thing 
 ## Other alternative to npm
 - `yarn` : super fast. They first introducted the `package-lock.json` file. `npm` added it after them.
 - `ni` : less verbose approach
+
+# Advance npm
+
+# Publising a Package
+
+## Requirements
+- `npm` account
+- Well documented `README` file
+- Scoped package name : unqiue, descriptive, meets `npm` policies (eg. @angular/cli or @angular/core)
+
+## Dist-Tags
+Human readable tags, that are added when packages are published to `npm`.
+- Easy way to clarify details around release.
+- Used when publishing package with `--tag`.
+    - eg : `npm publish --tag bugfix`
+- Used after publication with `dist-tag` command.
+    - eg : `npm dist-tag add test-npm@1.0.0 [stable]`
+
